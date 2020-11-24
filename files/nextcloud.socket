@@ -1,0 +1,9 @@
+[Unit]
+Description=nextcloud uwsgi socket
+
+[Socket]
+ListenStream=/run/nextcloud.sock
+SocketMode=0666
+
+[Install]
+WantedBy=sockets.target

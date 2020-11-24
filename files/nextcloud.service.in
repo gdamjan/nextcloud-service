@@ -1,0 +1,18 @@
+[Unit]
+Description=nextcloud uwsgi service
+Requires=nextcloud.socket
+After=nextcloud.socket
+
+[Service]
+Type=notify
+DynamicUser=yes
+User=nextcloud
+ConfigurationDirectory=nextcloud
+StateDirectory=nextcloud
+ExecStart=@uwsgi@/bin/uwsgi --ini /etc/nextcloud.ini
+Restart=always
+BindReadOnlyPaths=/etc/ssl/certs/
+
+[Install]
+WantedBy=multi-user.target
+Also=nextcloud.socket

@@ -1,0 +1,25 @@
+[uwsgi]
+master = true
+processes = 8
+cheaper = 2
+die-on-term = true
+logger = @uwsgiLogger@
+
+mime-file = @mimeTypes@
+site-root = @nextcloud@
+chdir = %(site-root)
+
+static-check = %(site-root)
+static-index = index.html
+static-skip-ext = .php
+static-skip-ext = .inc
+offload-threads = 2
+
+plugins = 0:php
+php-ini = @php@/lib/php.ini
+php-docroot = %(site-root)
+php-index = index.php
+php-allowed-ext = .php
+php-allowed-ext = .inc
+
+php-set = date.timezone=CET

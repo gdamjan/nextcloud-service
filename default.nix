@@ -15,7 +15,7 @@ let
     systemdSupport = false;
     apxs2Support = false;
   }).withExtensions ({ all, ... }: with all; [
-    mysqli mysqlnd pdo pdo_mysql ctype curl dom gd intl iconv json mbstring openssl opcache
+    mysqli mysqlnd pdo pdo_mysql ctype curl dom gd filter intl iconv json mbstring openssl opcache
     fileinfo pcntl posix session zip zlib bz2 redis xmlreader xmlwriter simplexml
   ]);
 

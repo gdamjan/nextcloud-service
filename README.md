@@ -11,7 +11,26 @@ Get the latest image from [Github releases](https://github.com/gdamjan/nextcloud
 `/var/lib/portables` and then run:
 
 ```sh
-portablectl attach --enable --now nextcloud
+portablectl attach --enable --now nextcloud…
 ```
+
+## Nginx configuration
+
+The portable service will operate on the `/run/nextcloud.sock` uwsgi socket. We gonna let the host nginx handle
+all the http, https and letsencrypt work. The config is simple, just proxy everything back to the uwsgi socket:
+```
+server {
+    …
+    location / {
+        include uwsgi_params;
+        uwsgi_pass unix:/run/nextcloud.sock;
+    }
+    …
+}
+```
+> Note: even static files are served by the uwsgi server, but uwsgi has a good enough static files server, which doesn't
+> block the application workers
+
+## More info
 
 See the [wiki](https://github.com/gdamjan/nextcloud-service/wiki/) for more info.

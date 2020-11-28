@@ -14,8 +14,10 @@ let
     phpdbgSupport = false;
     systemdSupport = false;
     apxs2Support = false;
-  }).withExtensions ({ all, ... }: with all;
-    [mysqli mysqlnd pdo pdo_mysql pcntl posix filter mbstring fileinfo iconv intl dom json curl gd opcache session]);
+  }).withExtensions ({ all, ... }: with all; [
+    mysqli mysqlnd pdo pdo_mysql ctype curl dom gd intl iconv json mbstring openssl opcache
+    fileinfo pcntl posix session zip zlib bz2 redis xmlreader xmlwriter simplexml
+  ]);
 
   uwsgi = pkgs.uwsgi.override {
     systemd = pkgs.systemdMinimal;

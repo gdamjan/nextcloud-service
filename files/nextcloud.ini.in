@@ -15,6 +15,11 @@ static-skip-ext = .php
 static-skip-ext = .inc
 offload-threads = 2
 
+# nginx will set security headers
+env = modHeadersAvailable=true
+# pretty urls
+env = front_controller_active=true
+
 plugins = 0:php
 php-ini = @php@/lib/php.ini
 php-docroot = %(site-root)

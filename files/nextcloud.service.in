@@ -6,7 +6,7 @@ After=nextcloud.socket
 [Service]
 Type=notify
 DynamicUser=yes
-User=nextcloud
+Environment=NEXTCLOUD_CONFIG_DIR=/var/lib/nextcloud/config/
 ConfigurationDirectory=nextcloud
 StateDirectory=nextcloud
 ExecStart=@uwsgi@/bin/uwsgi --ini /etc/nextcloud.ini

@@ -3,9 +3,9 @@ let
   apps = [
     rec {
       name = "spreed";
-      version = "10.0.3";
+      version = "10.1.0";
       url = "https://github.com/nextcloud/${name}/releases/download/v${version}/${name}-${version}.tar.gz";
-      sha256 = "1j4dgincsp1ngdxa0h416f5b88mnsjjqr54vw366514d7cn360js";
+      sha256 = "1a58dy3wr0d13162rcg7dyn1n2xmmxkdgghfzd9bwn3wy1w76skl";
     }
     rec {
       name = "twofactor_totp";
@@ -25,8 +25,8 @@ in
 
 pkgs.stdenv.mkDerivation rec {
   pname = "nextcloud";
-  version = "20.0.3";
-  sha256 = "e0f64504d338f64d3c677357f0012cf8b0ed0dc42ec08f958b6dc4ff70edf175";
+  version = "20.0.4";
+  sha256 = "080lcskjnddklzayx5xf6j9ygc72sjm62f3x70gd3x96wci1d7r6";
 
   src = pkgs.fetchurl {
     url = "https://github.com/nextcloud/server/releases/download/v${version}/nextcloud-${version}.tar.bz2";

@@ -1,5 +1,9 @@
 { pkgs }:
 let
+  nextcloud = {
+    version = "20.0.4";
+    sha256 = "080lcskjnddklzayx5xf6j9ygc72sjm62f3x70gd3x96wci1d7r6";
+  };
   apps = [
     rec {
       name = "spreed";
@@ -25,12 +29,11 @@ in
 
 pkgs.stdenv.mkDerivation rec {
   pname = "nextcloud";
-  version = "20.0.4";
-  sha256 = "080lcskjnddklzayx5xf6j9ygc72sjm62f3x70gd3x96wci1d7r6";
+  version = nextcloud.version;
 
   src = pkgs.fetchurl {
     url = "https://github.com/nextcloud/server/releases/download/v${version}/nextcloud-${version}.tar.bz2";
-    sha256 = sha256;
+    sha256 = nextcloud.sha256;
   };
 
   additionalApps = map ({url, sha256, ...}: builtins.fetchurl {inherit url sha256;}) apps;

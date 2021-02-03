@@ -1,8 +1,8 @@
 { pkgs }:
 let
   nextcloud = {
-    version = "20.0.4";
-    sha256 = "080lcskjnddklzayx5xf6j9ygc72sjm62f3x70gd3x96wci1d7r6";
+    version = "20.0.7";
+    sha256 = "8ced82b772bf0af67d5be1323e40f977429bc0a2bcc864095efc78767500b72b";
   };
   apps = [
     rec {
@@ -32,7 +32,7 @@ pkgs.stdenv.mkDerivation rec {
   version = nextcloud.version;
 
   src = pkgs.fetchurl {
-    url = "https://github.com/nextcloud/server/releases/download/v${version}/nextcloud-${version}.tar.bz2";
+    url = "https://download.nextcloud.com/server/releases/nextcloud-${version}.tar.bz2";
     sha256 = nextcloud.sha256;
   };
 

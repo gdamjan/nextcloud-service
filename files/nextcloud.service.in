@@ -1,13 +1,13 @@
 [Unit]
 Description=nextcloud uwsgi service
+Wants=nextcloud-first-run.service
 Requires=nextcloud.socket
-After=nextcloud.socket
+After=nextcloud.socket nextcloud-first-run.service
 
 [Service]
 Type=notify
 DynamicUser=yes
 Environment=NEXTCLOUD_CONFIG_DIR=/var/lib/nextcloud/config/
-ConfigurationDirectory=nextcloud
 StateDirectory=nextcloud
 ExecStart=@uwsgi@/bin/uwsgi --ini /etc/nextcloud.ini
 Restart=always

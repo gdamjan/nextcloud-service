@@ -32,6 +32,11 @@ let
     inherit uwsgi php nextcloud uwsgiLogger;
     coreutils = pkgs.coreutils;
     mimeTypes = pkgs.mime-types + "/etc/mime.types";
+    nextcloudConfigTemplate = pkgs.substituteAll {
+        name = "nextcloud.config.php";
+        src = ./files/nextcloud.config.php.in;
+        inherit nextcloud;
+    };
 
     buildCommand = ''
         # prepare the portable service file-system layout
@@ -49,6 +54,7 @@ let
         mkdir -p $out/var/lib/nextcloud $out/etc/nextcloud $out/etc/ssl/certs
         substituteAll ${./files/nextcloud.ini.in} $out/etc/nextcloud.ini
         substituteAll ${./files/nextcloud.service.in} $out/etc/systemd/system/nextcloud.service
+        substituteAll ${./files/nextcloud-first-run.service.in} $out/etc/systemd/system/nextcloud-first-run.service
         cp ${./files/nextcloud.socket} $out/etc/systemd/system/nextcloud.socket
     '';
   };

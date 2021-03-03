@@ -1,0 +1,12 @@
+[Unit]
+Description=nextcloud prepare config file
+ConditionPathExists=!/var/lib/nextcloud/config/config.php
+
+[Service]
+Type=oneshot
+User=nextcloud
+DynamicUser=yes
+StateDirectory=nextcloud
+ExecStart=@coreutils@/bin/mkdir -p /var/lib/nextcloud/config /var/lib/nextcloud/apps
+ExecStart=@coreutils@/bin/cp @nextcloudConfigTemplate@ /var/lib/nextcloud/config/config.php
+ExecStart=@coreutils@/bin/touch /var/lib/nextcloud/config/CAN_INSTALL

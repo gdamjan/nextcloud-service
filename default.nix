@@ -31,11 +31,16 @@ let
     name = "rootfs";
     inherit uwsgi php nextcloud uwsgiLogger;
     coreutils = pkgs.coreutils;
-    mimeTypes = pkgs.mime-types + "/etc/mime.types";
     nextcloudConfigTemplate = pkgs.substituteAll {
         name = "nextcloud.config.php";
         src = ./files/nextcloud.config.php.in;
         inherit nextcloud;
+    };
+    uwsgiConfig = pkgs.substituteAll {
+        name = "uwsgi.nextcloud.ini";
+        src = ./files/uwsgi.nextcloud.ini.in;
+        mimeTypes = pkgs.mime-types + "/etc/mime.types";
+        inherit nextcloud php uwsgiLogger;
     };
 
     buildCommand = ''
@@ -51,8 +56,7 @@ let
         ln -s ${nextcloud} $out/srv/nextcloud
 
         # create empty directories as mount points for the services
-        mkdir -p $out/var/lib/nextcloud $out/etc/nextcloud $out/etc/ssl/certs
-        substituteAll ${./files/nextcloud.ini.in} $out/etc/nextcloud.ini
+        mkdir -p $out/var/lib/nextcloud $out/etc/ssl/certs
         substituteAll ${./files/nextcloud.service.in} $out/etc/systemd/system/nextcloud.service
         substituteAll ${./files/nextcloud-first-run.service.in} $out/etc/systemd/system/nextcloud-first-run.service
         cp ${./files/nextcloud.socket} $out/etc/systemd/system/nextcloud.socket

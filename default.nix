@@ -16,7 +16,7 @@ let
     apxs2Support = false;
   }).withExtensions ({ all, ... }: with all; [
     sqlite3 pdo_sqlite mysqli mysqlnd pdo pdo_mysql ctype curl dom gd filter intl iconv json mbstring openssl opcache
-    fileinfo pcntl posix session zip zlib bz2 redis xmlreader xmlwriter simplexml
+    bcmath gmp imagick fileinfo pcntl posix session zip zlib bz2 redis xmlreader xmlwriter simplexml
   ]);
 
   uwsgi = pkgs.uwsgi.override {

@@ -13,7 +13,7 @@ static-check = %(site-root)
 static-index = index.html
 static-skip-ext = .php
 static-skip-ext = .inc
-offload-threads = 2
+offload-threads = 4
 
 # nginx will set security headers
 env = modHeadersAvailable=true
@@ -28,3 +28,4 @@ php-allowed-ext = .php
 php-allowed-ext = .inc
 
 php-set = date.timezone=CET
+php-set = memory_limit=512M

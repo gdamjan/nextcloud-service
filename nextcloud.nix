@@ -1,8 +1,8 @@
 { pkgs }:
 let
   nextcloud = {
-    version = "21.0.2";
-    sha256 = "1zhiamyj1vmvmhqb047cj03nrgpag12g4j6js9gxp19lk883hnsy";
+    version = "21.0.3";
+    sha256 = "1vjkp4zis80h296k6k2xvz8h5fh3dpirryl64lrk6357qxsx3p4a";
   };
   apps = [
     rec {

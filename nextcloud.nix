@@ -13,15 +13,15 @@ let
     }
     rec {
       name = "twofactor_totp";
-      version = "6.0.0";
-      url = "https://github.com/nextcloud/${name}/releases/download/v${version}/${name}.tar.gz";
-      sha256 = "086qpyn4hqx9zyqrs0b9js7lz6wzq6nyrq2ca5yrdijsh9flrxi9";
+      version = "6.1.0";
+      url = "https://github.com/nextcloud-releases/${name}/releases/download/v${version}/${name}.tar.gz";
+      sha256 = "18xqqjk08iz2a2n9l87v9siqllzqmr4ap9bp6p8xw3yn0m1zgp05";
     }
     rec {
       name = "twofactor_u2f";
-      version = "6.1.0";
-      url = "https://github.com/nextcloud/${name}/releases/download/v${version}/${name}.tar.gz";
-      sha256 = "0qn0qzr9ngnwaxacbi5vk8ibkxy73da0xbfmr07qndb06p6mrga0";
+      version = "6.2.0";
+      url = "https://github.com/nextcloud-releases/${name}/releases/download/v${version}/${name}.tar.gz";
+      sha256 = "0rry094wxbq2dsaasvybzavgyr6crhmc63gbkhigsfbn9af53qy8";
     }
   ];
 

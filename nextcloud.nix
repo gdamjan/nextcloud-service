@@ -1,15 +1,16 @@
 { pkgs }:
 let
-  nextcloud = {
-    version = "22.0.0";
-    sha256 = "0yjxpkniwyqiq4b0iw4sjyxvbwn02dsv7cpknp4sgb1p9isx649r";
+  nextcloud = rec {
+    version = "22.2.0";
+    url = "https://download.nextcloud.com/server/releases/nextcloud-${version}.tar.bz2";
+    sha256 = "07ryvynws65k42n6ca20nni1vqr90fsrd2dpx2bvh09mwhyblg97";
   };
   apps = [
     rec {
       name = "spreed";
-      version = "12.0.1";
+      version = "12.2.1";
       url = "https://github.com/nextcloud-releases/${name}/releases/download/v${version}/${name}-${version}.tar.gz";
-      sha256 = "04dvq4nha86877yyhbvv2lq4xx0z4ymh5vx6mknmqmmn4xg3fmyl";
+      sha256 = "0fbi76jckmp73w14g924i7p2x9jiby09gjmgim9l4sq2cvkb8cjr";
     }
     rec {
       name = "twofactor_totp";
@@ -32,7 +33,7 @@ pkgs.stdenv.mkDerivation rec {
   version = nextcloud.version;
 
   src = pkgs.fetchurl {
-    url = "https://download.nextcloud.com/server/releases/nextcloud-${version}.tar.bz2";
+    url = nextcloud.url;
     sha256 = nextcloud.sha256;
   };
 

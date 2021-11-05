@@ -10,7 +10,6 @@ DynamicUser=yes
 Environment=NEXTCLOUD_CONFIG_DIR=/var/lib/nextcloud/config/
 StateDirectory=nextcloud
 ExecStart=@uwsgi@/bin/uwsgi --ini @uwsgiConfig@
-Restart=always
 BindReadOnlyPaths=/etc/ssl/certs/
 
 [Install]

@@ -2,7 +2,14 @@ name: Test build
 
 on:
   push:
-    branch: main
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+env:
+  ARTIFACT_NAME: nextcloud_test
 
 jobs:
   build:
@@ -17,8 +24,13 @@ jobs:
 
     - run: nix-build
 
-    - name: Archive artifacts
+    - name: Prepare artifact
+      run: cp result ${{ env.ARTIFACT_NAME }}.raw
+
+    - name: Upload artifact
       uses: actions/upload-artifact@v2
       with:
-        path: nextcloud_*.raw*
+        name: ${{ env.ARTIFACT_NAME }}
+        path: ${{ env.ARTIFACT_NAME }}.raw
         if-no-files-found: error
+        retention-days: 5

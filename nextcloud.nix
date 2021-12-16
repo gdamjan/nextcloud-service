@@ -1,28 +1,28 @@
 { pkgs }:
 let
   nextcloud = rec {
-    version = "22.2.0";
+    version = "23.0.0";
     url = "https://download.nextcloud.com/server/releases/nextcloud-${version}.tar.bz2";
-    sha256 = "07ryvynws65k42n6ca20nni1vqr90fsrd2dpx2bvh09mwhyblg97";
+    sha256 = "0b0ss1svxyg3kfbymhn85zspmf0lyhj1la2rhk98yp5nqfmr4xf3";
   };
   apps = [
     rec {
       name = "spreed";
-      version = "12.2.1";
-      url = "https://github.com/nextcloud-releases/${name}/releases/download/v${version}/${name}-${version}.tar.gz";
-      sha256 = "0fbi76jckmp73w14g924i7p2x9jiby09gjmgim9l4sq2cvkb8cjr";
+      version = "13.0.1";
+      url = "https://github.com/nextcloud-releases/${name}/releases/download/v${version}/${name}-v${version}.tar.gz";
+      sha256 = "0xifppmn59qqvbkaljsij9m9sdj5dxpqrfk20bgl4cpg7nlhkzy2";
     }
     rec {
       name = "twofactor_totp";
-      version = "6.1.0";
+      version = "6.2.0";
       url = "https://github.com/nextcloud-releases/${name}/releases/download/v${version}/${name}.tar.gz";
-      sha256 = "18xqqjk08iz2a2n9l87v9siqllzqmr4ap9bp6p8xw3yn0m1zgp05";
+      sha256 = "03w0nnv7bp4h61yg9scb6l2hkpx7ihf0fqi5x4kq2p661dfax9dg";
     }
     rec {
       name = "twofactor_u2f";
-      version = "6.2.0";
+      version = "6.3.0";
       url = "https://github.com/nextcloud-releases/${name}/releases/download/v${version}/${name}.tar.gz";
-      sha256 = "0rry094wxbq2dsaasvybzavgyr6crhmc63gbkhigsfbn9af53qy8";
+      sha256 = "0z1d7mm6fnaddgpalpjccbzyllkbrrx97z3adgx2f05j3qcd7ic9";
     }
   ];
 

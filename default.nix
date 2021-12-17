@@ -2,7 +2,6 @@
 
 let
   squash-compression = "xz -Xdict-size 100%";
-  uwsgiLogger = if withSystemd then "systemd" else "stdio";
 
   nextcloud = (import ./nextcloud.nix { inherit pkgs; });
 
@@ -19,6 +18,14 @@ let
     bcmath gmp imagick fileinfo pcntl posix session zip zlib bz2 redis xmlreader xmlwriter simplexml
   ]);
 
+  uwsgiConfig = pkgs.substituteAll {
+    name = "uwsgi.nextcloud.ini";
+    src = ./files/uwsgi.nextcloud.ini.in;
+    mimeTypes = pkgs.mime-types + "/etc/mime.types";
+    uwsgiLogger = if withSystemd then "systemd" else "stdio";
+    inherit nextcloud php withSystemd;
+  };
+
   uwsgi = pkgs.uwsgi.override {
     systemd = pkgs.systemdMinimal;
     withPAM = false;
@@ -29,18 +36,12 @@ let
 
   rootfs = pkgs.stdenv.mkDerivation rec {
     name = "rootfs";
-    inherit uwsgi php nextcloud uwsgiLogger;
+    inherit uwsgi php nextcloud uwsgiConfig;
     coreutils = pkgs.coreutils;
     nextcloudConfigTemplate = pkgs.substituteAll {
         name = "nextcloud.config.php";
         src = ./files/nextcloud.config.php.in;
         inherit nextcloud;
-    };
-    uwsgiConfig = pkgs.substituteAll {
-        name = "uwsgi.nextcloud.ini";
-        src = ./files/uwsgi.nextcloud.ini.in;
-        mimeTypes = pkgs.mime-types + "/etc/mime.types";
-        inherit nextcloud php uwsgiLogger;
     };
 
     buildCommand = ''

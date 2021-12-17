@@ -9,16 +9,27 @@ mime-file = @mimeTypes@
 site-root = @nextcloud@
 chdir = %(site-root)
 
+# nginx will set security headers
+env = modHeadersAvailable=true
+# pretty urls
+env = front_controller_active=true
+
+route-uri = ^/ocs/v1.php last:
+route-uri = ^/ocs/v2.php last:
+route-uri = ^/remote.php last:
+route-uri = ^/remote/(.*) redirect-permanent:/remote.php/$1
+route-uri = ^/.well-known/carddav redirect-permanent:/remote.php/dav/
+route-uri = ^/.well-known/caldav redirect-permanent:/remote.php/dav/
+route-uri = ^/core/ rewrite:/index.php${REQUEST_URI}
+route-uri = ^/apps/ rewrite:/index.php${REQUEST_URI}
+route-if = exists:%(site-root)${PATH_INFO} last:
+route-run = rewrite:/index.php${REQUEST_URI}
+
 static-check = %(site-root)
 static-index = index.html
 static-skip-ext = .php
 static-skip-ext = .inc
 offload-threads = 4
-
-# nginx will set security headers
-env = modHeadersAvailable=true
-# pretty urls
-env = front_controller_active=true
 
 plugins = 0:php
 php-ini = @php@/lib/php.ini

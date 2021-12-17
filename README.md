@@ -25,6 +25,8 @@ server {
     location / {
         include uwsgi_params;
         uwsgi_pass unix:/run/nextcloud.sock;
+        uwsgi_intercept_errors on;
+        uwsgi_request_buffering off;
     }
     …
 }

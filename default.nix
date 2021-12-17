@@ -78,15 +78,10 @@ pkgs.stdenv.mkDerivation {
       done
 
       # archive the nix store
-      mksquashfs nix $out \
+      mksquashfs nix ${rootfs}/* $out \
         -noappend \
         -keep-as-directory \
         -all-root -root-mode 755 \
-        -b 1048576 -comp ${squash-compression} \
-        -ef ${./exclude.list} -wildcards
-
-      # and now add the rootfs layout
-      mksquashfs ${rootfs} $out \
-        -all-root -root-mode 755
+        -b 1048576 -comp ${squash-compression}
   '';
 }

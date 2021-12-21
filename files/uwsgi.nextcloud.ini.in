@@ -14,15 +14,20 @@ env = modHeadersAvailable=true
 # pretty urls
 env = front_controller_active=true
 
+# don't prettify these:
 route-uri = ^/ocs/v1.php last:
 route-uri = ^/ocs/v2.php last:
 route-uri = ^/remote.php last:
+# some compatibility redirects:
 route-uri = ^/remote/(.*) redirect-permanent:/remote.php/$1
 route-uri = ^/.well-known/carddav redirect-permanent:/remote.php/dav/
 route-uri = ^/.well-known/caldav redirect-permanent:/remote.php/dav/
+# prettify these:
 route-uri = ^/core/ rewrite:/index.php${REQUEST_URI}
 route-uri = ^/apps/ rewrite:/index.php${REQUEST_URI}
+# if it exits, just handle it by uwsgi (static or php)
 route-if = exists:%(site-root)${PATH_INFO} last:
+# prettify the rest
 route-run = rewrite:/index.php${REQUEST_URI}
 
 static-check = %(site-root)

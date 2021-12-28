@@ -1,7 +1,7 @@
 <?php
 $CONFIG = array (
   'datadirectory' => '/var/lib/nextcloud/data',
-  'logfile' => '/var/lib/nextcloud/nextcloud.log',
+  'logfile' => '/var/log/nextcloud/nextcloud.log',
   'apps_paths' => [
     [
       'path'=> '@nextcloud@/apps',

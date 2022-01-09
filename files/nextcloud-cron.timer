@@ -1,0 +1,9 @@
+[Unit]
+Description=nextcloud cron timer
+
+[Timer]
+OnActiveSec=10m
+OnUnitActiveSec=5m
+
+[Install]
+WantedBy=timers.target

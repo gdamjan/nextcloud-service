@@ -59,8 +59,10 @@ let
         # create empty directories as mount points for the services
         mkdir -p $out/var/lib/nextcloud $out/etc/ssl/certs
         substituteAll ${./files/nextcloud.service.in} $out/etc/systemd/system/nextcloud.service
+        substituteAll ${./files/nextcloud-cron.service.in} $out/etc/systemd/system/nextcloud-cron.service
         substituteAll ${./files/nextcloud-first-run.service.in} $out/etc/systemd/system/nextcloud-first-run.service
         cp ${./files/nextcloud.socket} $out/etc/systemd/system/nextcloud.socket
+        cp ${./files/nextcloud-cron.timer} $out/etc/systemd/system/nextcloud-cron.timer
     '';
   };
 

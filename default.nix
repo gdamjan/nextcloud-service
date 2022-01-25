@@ -38,11 +38,7 @@ let
     name = "rootfs";
     inherit uwsgi php nextcloud uwsgiConfig;
     coreutils = pkgs.coreutils;
-    nextcloudConfigTemplate = pkgs.substituteAll {
-        name = "nextcloud.config.php";
-        src = ./files/nextcloud.config.php.in;
-        inherit nextcloud;
-    };
+    nextcloudConfig = ./files/nextcloud.config.php;
 
     buildCommand = ''
         # prepare the portable service file-system layout

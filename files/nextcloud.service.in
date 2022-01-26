@@ -7,7 +7,6 @@ After=nextcloud.socket nextcloud-first-run.service
 [Service]
 Type=notify
 DynamicUser=yes
-Environment=NEXTCLOUD_DIR=@nextcloud@
 Environment=NEXTCLOUD_CONFIG_DIR=/var/lib/nextcloud/config/
 StateDirectory=nextcloud
 LogsDirectory=nextcloud

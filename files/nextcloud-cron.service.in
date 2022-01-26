@@ -7,13 +7,8 @@ After=nextcloud-first-run.service
 Type=oneshot
 DynamicUser=yes
 User=nextcloud
-Environment=NEXTCLOUD_DIR=@nextcloud@
 Environment=NEXTCLOUD_CONFIG_DIR=/var/lib/nextcloud/config/
 StateDirectory=nextcloud
 LogsDirectory=nextcloud
 ExecStart=@php@/bin/php -f @nextcloud@/cron.php
 BindReadOnlyPaths=/etc/ssl/certs/
-
-[Install]
-WantedBy=multi-user.target
-Also=nextcloud.socket

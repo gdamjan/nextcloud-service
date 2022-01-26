@@ -4,7 +4,7 @@ $CONFIG = array (
   'logfile' => '/var/log/nextcloud/nextcloud.log',
   'apps_paths' => [
     [
-      'path'=> $_ENV["NEXTCLOUD_DIR"] . '/apps',
+      'path'=> '/srv/nextcloud/apps',
       'url' => '/apps',
       'writable' => false,
     ],

@@ -22,6 +22,7 @@ route-uri = ^/remote.php last:
 route-uri = ^/remote/(.*) redirect-permanent:/remote.php/$1
 route-uri = ^/.well-known/carddav redirect-permanent:/remote.php/dav/
 route-uri = ^/.well-known/caldav redirect-permanent:/remote.php/dav/
+route-uri = ^/.well-known/ redirect-permanent:/index.php${PATH_INFO}
 # prettify these:
 route-uri = ^/core/ rewrite:/index.php${REQUEST_URI}
 route-uri = ^/apps/ rewrite:/index.php${REQUEST_URI}

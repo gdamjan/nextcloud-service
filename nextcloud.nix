@@ -3,7 +3,7 @@ let
   nextcloud = rec {
     version = "23.0.0";
     url = "https://download.nextcloud.com/server/releases/nextcloud-${version}.tar.bz2";
-    sha256 = "0b0ss1svxyg3kfbymhn85zspmf0lyhj1la2rhk98yp5nqfmr4xf3";
+    sha256 = "sha256-w3WSq8O2XI/ShFkoGiT0FLh69S/IwuqXm+P5vnXQGiw=";
   };
   apps = [
     rec {
@@ -40,11 +40,14 @@ pkgs.stdenv.mkDerivation rec {
   additionalApps = map ({url, sha256, ...}: builtins.fetchurl {inherit url sha256;}) apps;
 
   installPhase = ''
-    mkdir $out
-    cp -ra * $out/
+    runHook preInstall
+    mkdir -p $out/
+    cp -R . $out/
 
     ${pkgs.lib.concatMapStrings (app: ''
         tar xf ${app} -C $out/apps/
     '') additionalApps}
+
+    runHook postInstall
   '';
 }

@@ -51,6 +51,7 @@ let
 
         mkdir -p $out/srv
         ln -s ${nextcloud} $out/srv/nextcloud
+        ln -s ${./files/occ} $out/usr/bin/occ
 
         # create empty directories as mount points for the services
         mkdir -p $out/var/lib/nextcloud $out/var/log/nextcloud $out/etc/ssl/certs

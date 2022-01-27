@@ -1,0 +1,6 @@
+#!/usr/bin/sh
+#
+# occ wrapper
+
+export NEXTCLOUD_CONFIG_DIR=$STATE_DIRECTORY/config/
+/usr/bin/php -d memory_limit=1024M -d apc.enable_cli=1 /srv/nextcloud/occ "$@"

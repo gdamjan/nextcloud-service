@@ -8,9 +8,9 @@ let
   apps = [
     rec {
       name = "spreed";
-      version = "13.0.1";
+      version = "13.0.2";
       url = "https://github.com/nextcloud-releases/${name}/releases/download/v${version}/${name}-v${version}.tar.gz";
-      sha256 = "0xifppmn59qqvbkaljsij9m9sdj5dxpqrfk20bgl4cpg7nlhkzy2";
+      sha256 = "1nzi4l5wcapywlcivzmjvfaqm8f9qzn3p657s0wgpmz5ffv3gsfk";
     }
     rec {
       name = "twofactor_totp";

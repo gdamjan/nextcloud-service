@@ -9,3 +9,4 @@ DynamicUser=yes
 StateDirectory=nextcloud
 ExecStart=@coreutils@/bin/mkdir -p /var/lib/nextcloud/config /var/lib/nextcloud/apps
 ExecStart=@coreutils@/bin/cp @nextcloudConfig@ /var/lib/nextcloud/config/config.php
+ExecStart=@coreutils@/bin/touch /var/lib/nextcloud/config/CAN_INSTALL

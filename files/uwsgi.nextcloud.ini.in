@@ -47,3 +47,5 @@ php-allowed-ext = .inc
 
 php-set = date.timezone=CET
 php-set = memory_limit=1024M
+php-set = upload_max_filesize=16G
+php-set = post_max_size=16G

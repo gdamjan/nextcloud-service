@@ -32,6 +32,7 @@ route-if = exists:%(site-root)${PATH_INFO} last:
 route-run = rewrite:/index.php${REQUEST_URI}
 
 static-check = %(site-root)
+static-map = /wapps=/var/lib/nextcloud/apps
 static-index = index.html
 static-skip-ext = .php
 static-skip-ext = .inc

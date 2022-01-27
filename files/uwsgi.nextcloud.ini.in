@@ -44,4 +44,4 @@ php-allowed-ext = .php
 php-allowed-ext = .inc
 
 php-set = date.timezone=CET
-php-set = memory_limit=512M
+php-set = memory_limit=1024M

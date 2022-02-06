@@ -4,6 +4,7 @@ processes = 8
 cheaper = 2
 die-on-term = true
 logger = @uwsgiLogger@
+buffer-size = 65535
 
 mime-file = @mimeTypes@
 site-root = @nextcloud@

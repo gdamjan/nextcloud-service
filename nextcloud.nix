@@ -1,9 +1,9 @@
 { pkgs }:
 let
   nextcloud = rec {
-    version = "24.0.0";
+    version = "24.0.1";
     url = "https://download.nextcloud.com/server/releases/nextcloud-${version}.tar.bz2";
-    sha256 = "sha256:101p2y677y7r38sk11kckprwyypbxfm3rpwvfns5yii01xibav0p";
+    sha256 = "sha256:0njf62j5z1y34gvc1fhzhwma5kxgrxiq20g7gnv5r9128xn8yank";
   };
   apps = [
     rec {

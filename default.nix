@@ -29,9 +29,8 @@ let
   uwsgi = pkgs.uwsgi.override {
     systemd = pkgs.systemdMinimal;
     withPAM = false;
-    withSystemd = withSystemd;
     plugins = ["php"];
-    php = php;
+    inherit php withSystemd;
   };
 
   rootfs = pkgs.stdenv.mkDerivation rec {

@@ -14,15 +14,9 @@ let
     }
     rec {
       name = "twofactor_totp";
-      version = "6.3.0";
-      url = "https://github.com/nextcloud-releases/${name}/releases/download/v${version}/${name}.tar.gz";
-      sha256 = "sha256:17c56fikfwvvhlvy19dpik9lyg7l92mwa54r2xk0msb9ygm3zk8c";
-    }
-    rec {
-      name = "twofactor_u2f";
-      version = "6.3.0";
-      url = "https://github.com/nextcloud-releases/${name}/releases/download/v${version}/${name}.tar.gz";
-      sha256 = "sha256:0z1d7mm6fnaddgpalpjccbzyllkbrrx97z3adgx2f05j3qcd7ic9";
+      version = "6.4.0";
+      url = "https://github.com/nextcloud-releases/${name}/releases/download/v${version}/${name}-v${version}.tar.gz";
+      sha256 = "sha256:06j8af9pydmnjr6h349nk3gc47dr91364f3gqiy5kpvcrm36j6vi";
     }
   ];
 

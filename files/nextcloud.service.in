@@ -10,7 +10,7 @@ DynamicUser=yes
 Environment=NEXTCLOUD_CONFIG_DIR=/var/lib/nextcloud/config/
 StateDirectory=nextcloud
 LogsDirectory=nextcloud
-ExecStart=@uwsgi@/bin/uwsgi --ini @uwsgiConfig@
+ExecStart=@execStart@
 
 [Install]
 WantedBy=multi-user.target

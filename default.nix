@@ -27,15 +27,15 @@ let
   uwsgiConfig = pkgs.substituteAll {
     name = "uwsgi.nextcloud.ini";
     src = ./files/uwsgi.nextcloud.ini.in;
-    mimeTypes = pkgs.mime-types + "/etc/mime.types";
+    mimeTypes = "${pkgs.mime-types}/etc/mime.types";
     uwsgiLogger = if withSystemd then "systemd" else "stdio";
-    inherit nextcloud php withSystemd;
+    inherit php nextcloud;
   };
 
   nextcloud-service = pkgs.substituteAll {
     name = "nextcloud.service";
     src = ./files/nextcloud.service.in;
-    inherit uwsgi uwsgiConfig;
+    execStart = "${uwsgi}/bin/uwsgi --ini ${uwsgiConfig}";
   };
 
   nextcloud-cron-service = pkgs.substituteAll {

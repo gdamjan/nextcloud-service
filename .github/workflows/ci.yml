@@ -14,8 +14,7 @@ env:
   ARTIFACT_PREFIX: nextcloud
 
 jobs:
-  build:
-    name: build
+  ci:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3

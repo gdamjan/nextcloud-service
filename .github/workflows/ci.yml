@@ -1,36 +1,51 @@
-name: Test build
+name: Test build & release
 
 on:
   push:
     branches:
       - main
+    tags:
+      - 'v*'
   pull_request:
     branches:
       - main
 
 env:
-  ARTIFACT_NAME: nextcloud_test
+  ARTIFACT_PREFIX: nextcloud
 
 jobs:
   build:
     name: build
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - uses: cachix/install-nix-action@v17
       with:
-        nix_path: nixpkgs=channel:nixos-22.05
+        nix_path: nixpkgs=channel:nixos-unstable
 
     - run: nix-build
 
-    - name: Prepare artifact
-      run: cp result ${{ env.ARTIFACT_NAME }}.raw
+    - name: Prepare artifacts
+      run: |
+        cp result/${{ env.ARTIFACT_PREFIX}}_*.raw ./
+        sh -c 'sha256sum $0 > $0.sha256' ${{ env.ARTIFACT_PREFIX }}_*.raw
 
-    - name: Upload artifact
-      uses: actions/upload-artifact@v2
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
       with:
-        name: ${{ env.ARTIFACT_NAME }}
-        path: ${{ env.ARTIFACT_NAME }}.raw
         if-no-files-found: error
         retention-days: 5
+        path: |
+          ${{ env.ARTIFACT_PREFIX }}_*.raw
+          ${{ env.ARTIFACT_PREFIX }}_*.raw.sha256
+        name: ${{ env.ARTIFACT_PREFIX }}
+
+    - name: Create a github release from tag
+      if: startsWith(github.ref, 'refs/tags/v')
+      uses: softprops/action-gh-release@v1
+      with:
+        prerelease: true
+        files: |
+          ${{ env.ARTIFACT_PREFIX }}_*.raw
+          ${{ env.ARTIFACT_PREFIX }}_*.raw.sha256

@@ -11,4 +11,3 @@ Environment=NEXTCLOUD_CONFIG_DIR=/var/lib/nextcloud/config/
 StateDirectory=nextcloud
 LogsDirectory=nextcloud
 ExecStart=@php@/bin/php -f @nextcloud@/cron.php
-BindReadOnlyPaths=/etc/ssl/certs/

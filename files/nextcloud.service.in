@@ -11,7 +11,6 @@ Environment=NEXTCLOUD_CONFIG_DIR=/var/lib/nextcloud/config/
 StateDirectory=nextcloud
 LogsDirectory=nextcloud
 ExecStart=@uwsgi@/bin/uwsgi --ini @uwsgiConfig@
-BindReadOnlyPaths=/etc/ssl/certs/
 
 [Install]
 WantedBy=multi-user.target

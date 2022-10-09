@@ -1,7 +1,6 @@
 { pkgs ? import <nixpkgs> {}, withSystemd ? true }:
 
 let
-  squash-compression = "xz -Xdict-size 100%";
 
   nextcloud = (import ./nextcloud.nix { inherit pkgs; });
 
@@ -18,6 +17,13 @@ let
     bcmath gmp imagick fileinfo pcntl posix session zip zlib bz2 redis xmlreader xmlwriter simplexml apcu
   ]);
 
+  uwsgi = pkgs.uwsgi.override {
+    withPAM = false;
+    systemd = pkgs.systemdMinimal;
+    plugins = ["php"];
+    inherit php withSystemd;
+  };
+
   uwsgiConfig = pkgs.substituteAll {
     name = "uwsgi.nextcloud.ini";
     src = ./files/uwsgi.nextcloud.ini.in;
@@ -26,61 +32,55 @@ let
     inherit nextcloud php withSystemd;
   };
 
-  uwsgi = pkgs.uwsgi.override {
-    systemd = pkgs.systemdMinimal;
-    withPAM = false;
-    plugins = ["php"];
-    inherit php withSystemd;
+  nextcloud-service = pkgs.substituteAll {
+    name = "nextcloud.service";
+    src = ./files/nextcloud.service.in;
+    inherit uwsgi uwsgiConfig;
   };
 
-  rootfs = pkgs.stdenv.mkDerivation rec {
-    name = "rootfs";
-    inherit uwsgi php nextcloud uwsgiConfig;
-    coreutils = pkgs.coreutils;
+  nextcloud-cron-service = pkgs.substituteAll {
+    name = "nextcloud-cron.service";
+    src = ./files/nextcloud-cron.service.in;
+    inherit php nextcloud;
+  };
+
+  nextcloud-first-run-service = pkgs.substituteAll {
+    name = "nextcloud-first-run.service";
+    src = ./files/nextcloud-first-run.service.in;
     nextcloudConfig = ./files/nextcloud.config.php;
-
-    buildCommand = ''
-        # prepare the portable service file-system layout
-        mkdir -p $out/etc/systemd/system $out/proc $out/sys $out/dev $out/run $out/tmp $out/var/tmp $out/usr/bin
-        touch $out/etc/resolv.conf $out/etc/machine-id
-        cp ${./files/os-release} $out/etc/os-release
-        ln -s ${pkgs.bash}/bin/bash $out/usr/bin/sh
-        ln -s ${php}/bin/php $out/usr/bin/php
-        ln -s usr/bin $out/bin
-
-        mkdir -p $out/srv
-        ln -s ${nextcloud} $out/srv/nextcloud
-        ln -s ${./files/occ} $out/usr/bin/occ
-
-        # create empty directories as mount points for the services
-        mkdir -p $out/var/lib/nextcloud $out/var/log/nextcloud $out/etc/ssl/certs
-        substituteAll ${./files/nextcloud.service.in} $out/etc/systemd/system/nextcloud.service
-        substituteAll ${./files/nextcloud-cron.service.in} $out/etc/systemd/system/nextcloud-cron.service
-        substituteAll ${./files/nextcloud-first-run.service.in} $out/etc/systemd/system/nextcloud-first-run.service
-        cp ${./files/nextcloud.socket} $out/etc/systemd/system/nextcloud.socket
-        cp ${./files/nextcloud-cron.timer} $out/etc/systemd/system/nextcloud-cron.timer
-    '';
+    inherit php nextcloud;
+    inherit (pkgs) coreutils;
   };
+
+  nextcloud-socket = pkgs.concatText "nextcloud.socket" [ ./files/nextcloud.socket ];
+  nextcloud-cron-timer = pkgs.concatText "nextcloud-cron.timer" [ ./files/nextcloud-cron.timer ];
+
+  occ = pkgs.writeShellScript "occ" ''
+    export NEXTCLOUD_CONFIG_DIR=$STATE_DIRECTORY/config/
+    ${php}/bin/php -d memory_limit=1024M -d apc.enable_cli=1 ${nextcloud}/occ "$@"
+  '';
 
 in
 
-pkgs.stdenv.mkDerivation {
-  name = "nextcloud.raw";
-  nativeBuildInputs = [ pkgs.squashfsTools ];
+pkgs.portableService {
+  pname = "nextcloud";
+  version = nextcloud.version;
+  description = ''Portable "Nextcloud" service run by uwsgi-php and built with Nix'';
+  homepage = "https://github.com/gdamjan/nextcloud-service/";
 
-  buildCommand = ''
-      closureInfo=${pkgs.closureInfo { rootPaths = [ rootfs ]; }}
+  units = [
+    nextcloud-service
+    nextcloud-cron-service
+    nextcloud-first-run-service
+    nextcloud-socket
+    nextcloud-cron-timer
+  ];
 
-      mkdir -p nix/store
-      for i in $(< $closureInfo/store-paths); do
-        cp -a "$i" "''${i:1}"
-      done
-
-      # archive the nix store
-      mksquashfs nix ${rootfs}/* $out \
-        -noappend \
-        -keep-as-directory \
-        -all-root -root-mode 755 \
-        -b 1048576 -comp ${squash-compression}
-  '';
+  symlinks = [
+    { object = "${nextcloud}"; symlink = "/srv/nextcloud"; }
+    { object = "${pkgs.cacert}/etc/ssl"; symlink = "/etc/ssl"; }
+    { object = "${pkgs.bash}/bin/bash"; symlink = "/bin/sh"; }
+    { object = "${php}/bin/php"; symlink = "/bin/php"; }
+    { object = occ; symlink = "/bin/occ"; }
+  ];
 }

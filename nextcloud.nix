@@ -10,7 +10,7 @@ let
       name = "spreed";
       version = "14.0.5";
       url = "https://github.com/nextcloud-releases/${name}/releases/download/v${version}/${name}-v${version}.tar.gz";
-      sha256 = "sha256:0286dljkp1dzn12yx9xnjl4z0zldfy6azyakisc4hri6prny1jnp";
+      sha256 = "sha256:1nwxkb3zrn1ygavxsrzr8mqz8njpcn2v0f71sjrjcn0v2xi023n2";
     }
     rec {
       name = "twofactor_totp";

@@ -77,7 +77,8 @@ pkgs.portableService {
   ];
 
   symlinks = [
-    { object = "${nextcloud}"; symlink = "/srv/nextcloud"; }
+    # FIXME: referenced in `files/nextcloud.config.php` for the non-writable apps_paths
+    { object = nextcloud; symlink = "/srv/nextcloud"; }
     { object = "${pkgs.cacert}/etc/ssl"; symlink = "/etc/ssl"; }
     { object = "${pkgs.bash}/bin/bash"; symlink = "/bin/sh"; }
     { object = "${php}/bin/php"; symlink = "/bin/php"; }

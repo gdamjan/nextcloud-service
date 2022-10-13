@@ -29,7 +29,8 @@ let
     src = ./files/uwsgi.nextcloud.ini.in;
     mimeTypes = "${pkgs.mime-types}/etc/mime.types";
     uwsgiLogger = if withSystemd then "systemd" else "stdio";
-    inherit php nextcloud;
+    siteRoot = nextcloud;
+    inherit php;
   };
 
   nextcloud-service = pkgs.substituteAll {

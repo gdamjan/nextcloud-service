@@ -7,7 +7,7 @@ logger = @uwsgiLogger@
 buffer-size = 65535
 
 mime-file = @mimeTypes@
-site-root = @nextcloud@
+site-root = @siteRoot@
 chdir = %(site-root)
 
 # nginx will set security headers

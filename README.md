@@ -14,6 +14,11 @@ Get the latest image from [Github releases](https://github.com/gdamjan/nextcloud
 portablectl attach --enable --now nextcloud…
 ```
 
+> ⚠️ Warning ⚠️
+>
+> On the first install wizard, don't enable the "Default Applications" in nextcloud (click cancel).
+> For more info see [issues](https://github.com/gdamjan/nextcloud-service/issues/2).
+
 ## Nginx configuration
 
 The portable service will operate on the `/run/nextcloud.sock` uwsgi socket. We gonna let the host nginx handle

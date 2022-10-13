@@ -10,6 +10,7 @@ DynamicUser=yes
 Environment=NEXTCLOUD_CONFIG_DIR=/var/lib/nextcloud/config/
 StateDirectory=nextcloud
 LogsDirectory=nextcloud
+TemporaryFileSystem=/var
 ExecStart=@execStart@
 
 [Install]

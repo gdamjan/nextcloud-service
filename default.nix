@@ -4,7 +4,7 @@ let
 
   nextcloud = (import ./nextcloud.nix { inherit pkgs; });
 
-  php = (pkgs.php.override {
+  php = (pkgs.php80.override {
     embedSupport = true;
     cliSupport = true;
     cgiSupport = false;

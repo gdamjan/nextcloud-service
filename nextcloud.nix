@@ -14,9 +14,9 @@ let
     }
     rec {
       name = "twofactor_totp";
-      version = "6.4.0";
+      version = "6.4.1";
       url = "https://github.com/nextcloud-releases/${name}/releases/download/v${version}/${name}-v${version}.tar.gz";
-      sha256 = "sha256:06j8af9pydmnjr6h349nk3gc47dr91364f3gqiy5kpvcrm36j6vi";
+      sha256 = "sha256:1qh0zv5hahw6if0k5jkv6i7s5ks38cgf1in418qr5vv9vbm8zbar";
     }
   ];
 

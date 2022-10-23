@@ -3,7 +3,7 @@ let
   nextcloud = rec {
     version = "25.0.0";
     url = "https://download.nextcloud.com/server/releases/nextcloud-${version}.tar.bz2";
-    sha256 = "sha256:0083mydqw0lfd4rcqgmh2ww9mx87gvwbpz8551r7wzm4h2czyvdj";
+    sha256 = "sha256:0jcgvmh8ggb3a5pmam409cjiw4nn1zzh7bnjngw4xd3jgffsq19c";
   };
   apps = [
     rec {

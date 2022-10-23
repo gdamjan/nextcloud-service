@@ -1,12 +1,13 @@
 [Unit]
 Description=nextcloud uwsgi service
 Wants=nextcloud-first-run.service
-Requires=nextcloud.socket
-After=nextcloud.socket nextcloud-first-run.service
+Requires=nextcloud-uwsgi.socket
+After=nextcloud-uwsgi.socket nextcloud-first-run.service
 
 [Service]
 Type=notify
 DynamicUser=yes
+User=nextcloud
 Environment=NEXTCLOUD_CONFIG_DIR=/var/lib/nextcloud/config/
 StateDirectory=nextcloud
 LogsDirectory=nextcloud
@@ -15,4 +16,4 @@ ExecStart=@execStart@
 
 [Install]
 WantedBy=multi-user.target
-Also=nextcloud.socket
+Also=nextcloud-uwsgi.socket

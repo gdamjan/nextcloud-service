@@ -4,8 +4,8 @@ ConditionPathExists=!/var/lib/nextcloud/config/config.php
 
 [Service]
 Type=oneshot
-User=nextcloud
 DynamicUser=yes
+User=nextcloud
 StateDirectory=nextcloud
 TemporaryFileSystem=/var
 ExecStart=@coreutils@/bin/mkdir -p /var/lib/nextcloud/config /var/lib/nextcloud/apps

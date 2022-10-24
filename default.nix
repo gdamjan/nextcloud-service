@@ -34,8 +34,8 @@ let
   };
 
   nextcloud-service = pkgs.substituteAll {
-    name = "nextcloud.service";
-    src = ./files/nextcloud.service.in;
+    name = "nextcloud-uwsgi.service";
+    src = ./files/nextcloud-uwsgi.service.in;
     execStart = "${uwsgi}/bin/uwsgi --ini ${uwsgiConfig}";
   };
 
@@ -53,7 +53,7 @@ let
     inherit (pkgs) coreutils;
   };
 
-  nextcloud-socket = pkgs.concatText "nextcloud.socket" [ ./files/nextcloud.socket ];
+  nextcloud-socket = pkgs.concatText "nextcloud-uwsgi.socket" [ ./files/nextcloud-uwsgi.socket ];
   nextcloud-cron-timer = pkgs.concatText "nextcloud-cron.timer" [ ./files/nextcloud-cron.timer ];
 
   occ = pkgs.writeShellScript "occ" ''

@@ -19,6 +19,7 @@ env = front_controller_active=true
 route-uri = ^/ocs/v1.php last:
 route-uri = ^/ocs/v2.php last:
 route-uri = ^/remote.php last:
+route-uri = ^/core/ajax/update.php last:
 # some compatibility redirects:
 route-uri = ^/remote/(.*) redirect-permanent:/remote.php/$1
 route-uri = ^/.well-known/carddav redirect-permanent:/remote.php/dav/

@@ -30,7 +30,6 @@ let
     mimeTypes = "${pkgs.mime-types}/etc/mime.types";
     uwsgiLogger = if withSystemd then "systemd" else "stdio";
     siteRoot = nextcloud;
-    inherit php;
   };
 
   nextcloud-service = pkgs.substituteAll {

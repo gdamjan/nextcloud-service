@@ -41,7 +41,6 @@ static-skip-ext = .inc
 offload-threads = 4
 
 plugins = 0:php
-php-ini = @php@/lib/php.ini
 php-docroot = %(site-root)
 php-index = index.php
 php-allowed-ext = .php

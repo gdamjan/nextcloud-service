@@ -12,10 +12,15 @@ let
     phpdbgSupport = false;
     systemdSupport = false;
     apxs2Support = false;
-  }).withExtensions ({ all, ... }: with all; [
-    sqlite3 pdo_sqlite mysqli mysqlnd pdo pdo_mysql ctype curl dom gd filter intl iconv mbstring openssl opcache
-    bcmath gmp imagick fileinfo pcntl posix session zip zlib bz2 redis xmlreader xmlwriter simplexml apcu
-  ]);
+  }).buildEnv {
+    extensions = { all, ... }: with all; [
+        sqlite3 pdo_sqlite mysqli mysqlnd pdo pdo_mysql ctype curl dom gd filter intl iconv mbstring openssl opcache
+        bcmath gmp imagick fileinfo pcntl posix session zip zlib bz2 redis xmlreader xmlwriter simplexml apcu ];
+    extraConfig = ''
+        memory_limit=1024M
+        apc.enable_cli=1
+    '';
+  };
 
   uwsgi = pkgs.uwsgi.override {
     withPAM = false;
@@ -57,7 +62,7 @@ let
 
   occ = pkgs.writeShellScript "occ" ''
     export NEXTCLOUD_CONFIG_DIR=$STATE_DIRECTORY/config/
-    ${php}/bin/php -d memory_limit=1024M -d apc.enable_cli=1 ${nextcloud}/occ "$@"
+    ${php}/bin/php ${nextcloud}/occ "$@"
   '';
 
 in

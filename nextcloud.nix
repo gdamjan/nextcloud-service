@@ -1,16 +1,16 @@
 { pkgs }:
 let
   nextcloud = rec {
-    version = "25.0.1";
+    version = "25.0.2";
     url = "https://download.nextcloud.com/server/releases/nextcloud-${version}.tar.bz2";
-    sha256 = "sha256:05bmsx3lx71vnipikkj00ki9j5r1yrx5jy01qhwr3wfa4ilhgm3j";
+    sha256 = "sha256:0nbxwdvk3ni4011f2nxm8drwkx0iy47mfprr8bd7p4q8l7x41ayn";
   };
   apps = [
     rec {
       name = "spreed";
-      version = "15.0.1";
+      version = "15.0.2";
       url = "https://github.com/nextcloud-releases/${name}/releases/download/v${version}/${name}-v${version}.tar.gz";
-      sha256 = "sha256:06yjfh475pwzspad1i98v4f6zcx48r6rrvpfji6nhpjjnwxzdvwl";
+      sha256 = "sha256:0qrf68iq2pqf5ml9lrlbjdd8a4cn1fxhgm5lpybzxi8m710sy0hk";
     }
   ];
 

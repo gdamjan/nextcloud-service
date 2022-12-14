@@ -26,6 +26,9 @@ all the http, https and letsencrypt work. The config is simple, just proxy every
 ```
 server {
     …
+    client_body_buffer_size 512k;
+    client_max_body_size 512M;
+    client_body_timeout 300s;
     location / {
         include uwsgi_params;
         uwsgi_pass unix:/run/nextcloud.sock;
@@ -36,7 +39,10 @@ server {
 }
 ```
 > Note: even static files are served by the uwsgi server, but uwsgi has a good enough static files server, which doesn't
-> block the application workers
+> block the application workers.
+
+> Note²: Consult the [nextcloud nginx installation docs](https://docs.nextcloud.com/server/latest/admin_manual/installation/nginx.html)
+> for non-fastcgi nginx parameters.
 
 ## More info
 

@@ -52,7 +52,7 @@ let
   nextcloud-first-run-service = pkgs.substituteAll {
     name = "nextcloud-first-run.service";
     src = ./files/nextcloud-first-run.service.in;
-    nextcloudConfig = ./files/nextcloud.config.php;
+    portableConfig = ./files/portable.config.php;
     inherit php nextcloud;
     inherit (pkgs) coreutils;
   };
@@ -82,7 +82,7 @@ pkgs.portableService {
   ];
 
   symlinks = [
-    # FIXME: referenced in `files/nextcloud.config.php` for the non-writable apps_paths
+    # FIXME: referenced in `files/portable.config.php` for the non-writable apps_paths
     { object = nextcloud; symlink = "/srv/nextcloud"; }
     { object = "${pkgs.cacert}/etc/ssl"; symlink = "/etc/ssl"; }
     { object = "${pkgs.bash}/bin/bash"; symlink = "/bin/sh"; }

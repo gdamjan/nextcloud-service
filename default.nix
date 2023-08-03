@@ -2,7 +2,7 @@
 
 let
 
-  nextcloud = (import ./nextcloud.nix { inherit pkgs; });
+  nextcloud = (pkgs.callPackage ./nextcloud.nix {});
 
   php = (pkgs.php.override {
     embedSupport = true;

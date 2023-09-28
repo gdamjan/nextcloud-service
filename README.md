@@ -11,7 +11,8 @@ Get the latest image from [Github releases](https://github.com/gdamjan/nextcloud
 `/var/lib/portables` and then run:
 
 ```sh
-portablectl attach --enable --now nextcloud…
+portablectl attach nextcloud_<version>
+systemctl enable --now nextcloud-uwsgi.socket nextcloud-cron.timer
 ```
 
 > ⚠️ Warning ⚠️
@@ -44,6 +45,29 @@ server {
 > Note²: Consult the [nextcloud nginx installation docs](https://docs.nextcloud.com/server/latest/admin_manual/installation/nginx.html)
 > for non-fastcgi nginx parameters.
 
+## Units provided
+
+The cron timer and service, periodically call `php -f cron.php` to run some
+nextcloud bookkeeping jobs:
+* `nextcloud-cron.timer`
+* `nextcloud-cron.service`
+
+The socket and uwsgi socket (`/run/nextcloud.sock`) is the main service:
+* `nextcloud-uwsgi.socket`
+* `nextcloud-uwsgi.service`
+
+The firstrun service, scaffolds `/var/lib/nextcloud` with the minimal
+configuration needed for a portable service to run successfully:
+* `nextcloud-first-run.service`
+
 ## More info
 
 See the [wiki](https://github.com/gdamjan/nextcloud-service/wiki/) for more info.
+
+## Build and update
+
+Have nix flakes enabled, and then:
+```
+nix flake update  # will update flake.lock
+nix build         # will create an image in ./result/
+```

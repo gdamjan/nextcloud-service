@@ -1,8 +1,8 @@
-{ pkgs ? import <nixpkgs> {}, withSystemd ? true }:
-
+{ pkgs, withSystemd ? true }:
 let
 
-  nextcloud = (pkgs.callPackage ./nextcloud.nix {});
+  nextcloud = pkgs.nextcloud27;
+  apps = [ pkgs.nextcloud27Packages.apps.spreed ];
 
   php = (pkgs.php.override {
     embedSupport = true;
@@ -68,7 +68,7 @@ let
 in
 
 pkgs.portableService {
-  pname = "nextcloud";
+  pname = nextcloud.pname;
   version = nextcloud.version;
   description = ''Portable "Nextcloud" service run by uwsgi-php and built with Nix'';
   homepage = "https://github.com/gdamjan/nextcloud-service/";

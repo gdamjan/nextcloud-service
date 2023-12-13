@@ -1,7 +1,7 @@
 {
   description = ''Portable Nextcloud service run by uwsgi-php and built with Nix'';
 
-  inputs.nixpkgs.url = github:NixOS/nixpkgs/nixos-unstable;
+  inputs.nixpkgs.url = github:NixOS/nixpkgs/nixos-23.11;
 
   outputs = { self, nixpkgs, ... }:
     let

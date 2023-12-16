@@ -19,7 +19,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - uses: cachix/install-nix-action@v18
+    - uses: cachix/install-nix-action@v24
 
     - run: nix build --no-update-lock-file
     - run: nix flake check --no-update-lock-file
@@ -30,7 +30,7 @@ jobs:
         sh -c 'sha256sum $0 > $0.sha256' ${{ env.ARTIFACT_PREFIX }}_*.raw
 
     - name: Upload artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         if-no-files-found: error
         retention-days: 5
@@ -38,6 +38,9 @@ jobs:
           ${{ env.ARTIFACT_PREFIX }}_*.raw
           ${{ env.ARTIFACT_PREFIX }}_*.raw.sha256
         name: ${{ env.ARTIFACT_PREFIX }}
+
+    - name: Release Info
+      run: nix build --no-update-lock-file .#release-info
 
     - name: Create a github release from tag
       if: startsWith(github.ref, 'refs/tags/v')
@@ -47,3 +50,4 @@ jobs:
         files: |
           ${{ env.ARTIFACT_PREFIX }}_*.raw
           ${{ env.ARTIFACT_PREFIX }}_*.raw.sha256
+        body_path: result

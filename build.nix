@@ -13,19 +13,50 @@ let
     systemdSupport = false;
     apxs2Support = false;
   }).buildEnv {
-    extensions = { all, ... }: with all; [
-        sqlite3 pdo_sqlite mysqli mysqlnd pdo pdo_mysql ctype curl dom gd filter intl iconv mbstring openssl opcache
-        bcmath gmp imagick fileinfo pcntl posix session zip zlib bz2 redis xmlreader xmlwriter simplexml apcu ];
+    extensions = { all, ... }:
+      with all; [
+        sqlite3
+        pdo_sqlite
+        mysqli
+        mysqlnd
+        pdo
+        pdo_mysql
+        ctype
+        curl
+        dom
+        gd
+        filter
+        intl
+        iconv
+        mbstring
+        openssl
+        opcache
+        bcmath
+        gmp
+        imagick
+        fileinfo
+        pcntl
+        posix
+        session
+        zip
+        zlib
+        bz2
+        redis
+        xmlreader
+        xmlwriter
+        simplexml
+        apcu
+      ];
     extraConfig = ''
-        memory_limit=1024M
-        apc.enable_cli=1
+      memory_limit=1024M
+      apc.enable_cli=1
     '';
   };
 
   uwsgi = pkgs.uwsgi.override {
     withPAM = false;
     systemd = pkgs.systemdMinimal;
-    plugins = ["php"];
+    plugins = [ "php" ];
     inherit php withSystemd;
   };
 
@@ -57,20 +88,21 @@ let
     inherit (pkgs) coreutils;
   };
 
-  nextcloud-socket = pkgs.concatText "nextcloud-uwsgi.socket" [ ./files/nextcloud-uwsgi.socket ];
-  nextcloud-cron-timer = pkgs.concatText "nextcloud-cron.timer" [ ./files/nextcloud-cron.timer ];
+  nextcloud-socket =
+    pkgs.concatText "nextcloud-uwsgi.socket" [ ./files/nextcloud-uwsgi.socket ];
+  nextcloud-cron-timer =
+    pkgs.concatText "nextcloud-cron.timer" [ ./files/nextcloud-cron.timer ];
 
   occ = pkgs.writeShellScript "occ" ''
     export NEXTCLOUD_CONFIG_DIR=$STATE_DIRECTORY/config/
     ${php}/bin/php ${nextcloud}/occ "$@"
   '';
 
-in
-
-pkgs.portableService {
+in pkgs.portableService {
   pname = nextcloud.pname;
   version = nextcloud.version;
-  description = ''Portable "Nextcloud" service run by uwsgi-php and built with Nix'';
+  description =
+    ''Portable "Nextcloud" service run by uwsgi-php and built with Nix'';
   homepage = "https://github.com/gdamjan/nextcloud-service/";
 
   units = [
@@ -83,10 +115,25 @@ pkgs.portableService {
 
   symlinks = [
     # FIXME: referenced in `files/portable.config.php` for the non-writable apps_paths
-    { object = nextcloud; symlink = "/srv/nextcloud"; }
-    { object = "${pkgs.cacert}/etc/ssl"; symlink = "/etc/ssl"; }
-    { object = "${pkgs.bash}/bin/bash"; symlink = "/bin/sh"; }
-    { object = "${php}/bin/php"; symlink = "/bin/php"; }
-    { object = occ; symlink = "/bin/occ"; }
+    {
+      object = nextcloud;
+      symlink = "/srv/nextcloud";
+    }
+    {
+      object = "${pkgs.cacert}/etc/ssl";
+      symlink = "/etc/ssl";
+    }
+    {
+      object = "${pkgs.bash}/bin/bash";
+      symlink = "/bin/sh";
+    }
+    {
+      object = "${php}/bin/php";
+      symlink = "/bin/php";
+    }
+    {
+      object = occ;
+      symlink = "/bin/occ";
+    }
   ];
 }

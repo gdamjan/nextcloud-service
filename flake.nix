@@ -11,7 +11,7 @@
         system = "x86_64-linux";
         modules = [ ];
       }).config.system.nixos;
-      nextcloud = pkgs.nextcloud27;
+      nextcloud = pkgs.nextcloud28;
       php = pkgs.php;
       uwsgi = pkgs.uwsgi;
     in {

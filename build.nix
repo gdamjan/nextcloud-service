@@ -1,10 +1,9 @@
-{ pkgs, withSystemd ? true }:
+{ pkgs, nextcloud, php, uwsgi, withSystemd ? true }:
 let
 
-  nextcloud = pkgs.nextcloud27;
-  apps = [ pkgs.nextcloud27Packages.apps.spreed ];
+  apps = [ nextcloud.packages.apps.spreed ];
 
-  php = (pkgs.php.override {
+  phpWithModules = (php.override {
     embedSupport = true;
     cliSupport = true;
     cgiSupport = false;
@@ -53,11 +52,12 @@ let
     '';
   };
 
-  uwsgi = pkgs.uwsgi.override {
+  uwsgiWithPhp = uwsgi.override {
     withPAM = false;
     systemd = pkgs.systemdMinimal;
     plugins = [ "php" ];
-    inherit php withSystemd;
+    php = phpWithModules;
+    inherit withSystemd;
   };
 
   uwsgiConfig = pkgs.substituteAll {
@@ -71,20 +71,22 @@ let
   nextcloud-service = pkgs.substituteAll {
     name = "nextcloud-uwsgi.service";
     src = ./files/nextcloud-uwsgi.service.in;
-    execStart = "${uwsgi}/bin/uwsgi --ini ${uwsgiConfig}";
+    execStart = "${uwsgiWithPhp}/bin/uwsgi --ini ${uwsgiConfig}";
   };
 
   nextcloud-cron-service = pkgs.substituteAll {
     name = "nextcloud-cron.service";
     src = ./files/nextcloud-cron.service.in;
-    inherit php nextcloud;
+    php = phpWithModules;
+    inherit nextcloud;
   };
 
   nextcloud-first-run-service = pkgs.substituteAll {
     name = "nextcloud-first-run.service";
     src = ./files/nextcloud-first-run.service.in;
     portableConfig = ./files/portable.config.php;
-    inherit php nextcloud;
+    php = phpWithModules;
+    inherit nextcloud;
     inherit (pkgs) coreutils;
   };
 
@@ -95,7 +97,7 @@ let
 
   occ = pkgs.writeShellScript "occ" ''
     export NEXTCLOUD_CONFIG_DIR=$STATE_DIRECTORY/config/
-    ${php}/bin/php ${nextcloud}/occ "$@"
+    ${phpWithModules}/bin/php ${nextcloud}/occ "$@"
   '';
 
 in pkgs.portableService {
@@ -128,7 +130,7 @@ in pkgs.portableService {
       symlink = "/bin/sh";
     }
     {
-      object = "${php}/bin/php";
+      object = "${phpWithModules}/bin/php";
       symlink = "/bin/php";
     }
     {

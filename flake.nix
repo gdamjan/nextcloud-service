@@ -11,16 +11,19 @@
         system = "x86_64-linux";
         modules = [ ];
       }).config.system.nixos;
+      nextcloud = pkgs.nextcloud27;
+      php = pkgs.php;
+      uwsgi = pkgs.uwsgi;
     in {
       formatter.x86_64-linux = pkgs.nixfmt;
       packages.x86_64-linux.default = (import ./build.nix {
-        inherit pkgs;
+        inherit pkgs nextcloud php uwsgi;
         withSystemd = false;
       });
       packages.x86_64-linux.release-info = pkgs.writeText "release-info.txt" ''
-        php: ${pkgs.php.version}
-        uwsgi: ${pkgs.uwsgi.version}
-        nextcloud: ${pkgs.nextcloud27.version}
+        php: ${php.version}
+        uwsgi: ${uwsgi.version}
+        nextcloud: ${nextcloud.version}
         ${nixos.distroName} ${nixos.release} (${nixos.codeName})
         ${nixos.distroId} ${nixos.label}
       '';

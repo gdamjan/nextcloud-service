@@ -40,7 +40,9 @@ jobs:
         name: ${{ env.ARTIFACT_PREFIX }}
 
     - name: Release Info
-      run: nix build --no-update-lock-file .#release-info
+      run: |
+        nix build --no-update-lock-file -o release-info .#release-info
+        cat release-info
 
     - name: Create a github release from tag
       if: startsWith(github.ref, 'refs/tags/v')
@@ -50,4 +52,4 @@ jobs:
         files: |
           ${{ env.ARTIFACT_PREFIX }}_*.raw
           ${{ env.ARTIFACT_PREFIX }}_*.raw.sha256
-        body_path: result
+        body_path: release-info

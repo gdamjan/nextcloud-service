@@ -45,6 +45,8 @@ let
         xmlwriter
         simplexml
         apcu
+        sysvsem
+        exif
       ];
     extraConfig = ''
       memory_limit=1024M

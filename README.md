@@ -8,9 +8,10 @@ Made with uwsgi and nixos.
 ## Quick Start
 
 Get the latest image from [Github releases](https://github.com/gdamjan/nextcloud-service/releases/), into
-`/var/lib/portables` and then run:
+`/var/lib/portables`, then attach the portable service, and enable/start it. For ex:
 
 ```sh
+importctl pull-raw --class=portable --verify=checksum https://github.com/gdamjan/nextcloud-service/releases/download/v<version>/nextcloud_<version>.raw # or use curl
 portablectl attach nextcloud_<version>
 systemctl enable --now nextcloud-uwsgi.socket nextcloud-cron.timer
 ```

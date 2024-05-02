@@ -1,2 +1,3 @@
-/tt-rss.raw
-/image-workdir
+/release-info
+/result
+*.raw

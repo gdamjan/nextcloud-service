@@ -2,7 +2,7 @@
   description =
     "Portable Nextcloud service run by uwsgi-php and built with Nix";
 
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
 
   outputs = { self, nixpkgs, ... }:
     let
@@ -11,7 +11,7 @@
         system = "x86_64-linux";
         modules = [ ];
       }).config.system.nixos;
-      nextcloud = pkgs.nextcloud30;
+      nextcloud = pkgs.nextcloud33;
       php = pkgs.php;
       uwsgi = pkgs.uwsgi;
     in {

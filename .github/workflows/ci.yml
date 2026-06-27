@@ -14,9 +14,9 @@ jobs:
   ci:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
 
-    - uses: cachix/install-nix-action@v30
+    - uses: cachix/install-nix-action@v31.10.6
 
     - run: nix build --no-update-lock-file
     - run: nix flake check --no-update-lock-file
@@ -27,7 +27,7 @@ jobs:
         sh -c 'sha256sum $0 > $0.sha256' *.raw
 
     - name: Upload artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         if-no-files-found: error
         retention-days: 5
@@ -42,7 +42,7 @@ jobs:
 
     - name: Create a github release from tag
       if: startsWith(github.ref, 'refs/tags/v')
-      uses: softprops/action-gh-release@v2
+      uses: softprops/action-gh-release@v3
       with:
         prerelease: true
         files: |

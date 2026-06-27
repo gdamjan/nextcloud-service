@@ -63,7 +63,7 @@ let
   };
 
   uwsgiConfig = pkgs.replaceVars ./files/uwsgi.nextcloud.ini {
-    mimeTypes = "${pkgs.mime-types}/etc/mime.types";
+    mimeTypes = "${pkgs.mailcap}/etc/mime.types";
     uwsgiLogger = if withSystemd then "systemd" else "stdio";
     siteRoot = nextcloud;
   };

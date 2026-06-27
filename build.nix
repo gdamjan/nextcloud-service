@@ -62,30 +62,22 @@ let
     inherit withSystemd;
   };
 
-  uwsgiConfig = pkgs.substituteAll {
-    name = "uwsgi.nextcloud.ini";
-    src = ./files/uwsgi.nextcloud.ini.in;
+  uwsgiConfig = pkgs.replaceVars ./files/uwsgi.nextcloud.ini {
     mimeTypes = "${pkgs.mime-types}/etc/mime.types";
     uwsgiLogger = if withSystemd then "systemd" else "stdio";
     siteRoot = nextcloud;
   };
 
-  nextcloud-service = pkgs.substituteAll {
-    name = "nextcloud-uwsgi.service";
-    src = ./files/nextcloud-uwsgi.service.in;
+  nextcloud-service = pkgs.replaceVars ./files/nextcloud-uwsgi.service {
     execStart = "${uwsgiWithPhp}/bin/uwsgi --ini ${uwsgiConfig}";
   };
 
-  nextcloud-cron-service = pkgs.substituteAll {
-    name = "nextcloud-cron.service";
-    src = ./files/nextcloud-cron.service.in;
+  nextcloud-cron-service = pkgs.replaceVars ./files/nextcloud-cron.service {
     php = phpWithModules;
     inherit nextcloud;
   };
 
-  nextcloud-first-run-service = pkgs.substituteAll {
-    name = "nextcloud-first-run.service";
-    src = ./files/nextcloud-first-run.service.in;
+  nextcloud-first-run-service = pkgs.replaceVars ./files/nextcloud-first-run.service {
     portableConfig = ./files/portable.config.php;
     php = phpWithModules;
     inherit nextcloud;
